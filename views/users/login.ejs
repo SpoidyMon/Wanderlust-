@@ -5,27 +5,28 @@
   <div class="col-6 offset-3 mt-3">
     <form action="/login" method="post" class="needs-validation" novalidate>
       <div class="mb-3">
-        <label for="username" class="form-label">Username </label>
+        <label for="username" class="form-label">Enter your username </label>
         <input
           type="text"
           id="username"
           name="username"
+          placeholder="Username"
           class="form-control"
           required
         />
-       
       </div>
-      
+
       <div class="mb-3">
-        <label for="password" class="form-label">Password </label>
+        <label for="password" class="form-label">Enter your Passowrd </label>
         <input
           type="password"
           id="password"
           name="password"
+          placeholder="Password"
+          autocomplete="new-password"
           class="form-control"
           required
         />
-        
       </div>
       <button class="btn btn-success">Login</button>
     </form>
