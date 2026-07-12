@@ -25,9 +25,13 @@ module.exports.saveRedirectUrl = (req, res, next) => {
 module.exports.isOwner = async (req, res, next) => {
   let { id } = req.params;
   let updatelst = await Listing.findById(id);
+  if (!updatelst) {
+    req.flash("error", "Listing not found!");
+    return res.redirect("/listing");
+  }
   if (!updatelst.owner._id.equals(res.locals.currUser._id)) {
     req.flash("error", "You are not permitted to make changes");
-    return res.redirect(`/listing/${id}`)
+    return res.redirect(`/listing/${id}`);
   }
   next();
 }
@@ -60,11 +64,15 @@ module.exports.validatereviews = (req, res, next) => {
 }
 
 module.exports.isAuthor = async (req, res, next) => {
-  let { id,reviewID } = req.params;
-  let newReview= await Review.findById(reviewID);
+  let { id, reviewID } = req.params;
+  let newReview = await Review.findById(reviewID);
+  if (!newReview) {
+    req.flash("error", "Review not found!");
+    return res.redirect(`/listing/${id}`);
+  }
   if (!newReview.author._id.equals(res.locals.currUser._id)) {
-    req.flash("error", "You are not author of this review");
-    return res.redirect(`/listing/${id}`)
+    req.flash("error", "You are not the author of this review");
+    return res.redirect(`/listing/${id}`);
   }
   next();
 }

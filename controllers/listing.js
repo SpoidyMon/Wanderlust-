@@ -107,30 +107,26 @@ module.exports.renderEditForm = async (req, res) => {
 
 module.exports.updateListing = async (req, res) => {
   let { id } = req.params;
-
   let { listing } = req.body;
 
-  // We restructure the image so Mongoose sees 'image.url'
-  const updatedListing = {
-    ...listing,
-    image: {
-      url: listing.image,
-      filename: "listingimage",
-    },
+  // Do NOT spread listing directly — it may contain image:undefined from multer removing the file field.
+  // Only pass the text fields; image is handled separately below.
+  const fieldsToUpdate = {
+    title: listing.title,
+    description: listing.description,
+    price: listing.price,
+    country: listing.country,
+    location: listing.location,
+    category: listing.category,
   };
 
-  // The SECRET: { runValidators: true } makes your Schema 'set' function work!
-  let lst = await Listing.findByIdAndUpdate(id, updatedListing, {
-
-    //  By default, Mongoose only runs validation (checking if a number is positive, if a string is required, etc.) when you create a new document. When you update a document, it skips these checks.
-
-    // Adding runValidators: true forces Mongoose to check your schema rules even during an update.
+  let lst = await Listing.findByIdAndUpdate(id, fieldsToUpdate, {
     runValidators: true,
+    new: true,
   });
 
-  //setiing updated image 
-
-  if (typeof req.file !== "undefined") {
+  // Only update image if a new file was actually uploaded
+  if (req.file) {
     let url = req.file.path;
     let filename = req.file.filename;
     lst.image = { url, filename };
