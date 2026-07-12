@@ -29,52 +29,39 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.addNewlisting = async (req, res, next) => {
-  // console.log("Req Body is:", req.body.listing);
-  // if(!req.body.listing){
-  //     throw new ExpressError(400,"Send valid data for Listing")
-  // }
 
-  let response = await maptilerCient.geocoding.forward(req.body.listing.location, {
-    limit: 1
-  })
+  // Guard: image upload must succeed
+  if (!req.file) {
+    req.flash("error", "Image upload failed. Please try again.");
+    return res.redirect("/listing/new");
+  }
 
-  //------------------
+  // Geocoding (maptiler) — get coordinates from location string
+  let geometry;
+  try {
+    let response = await maptilerCient.geocoding.forward(req.body.listing.location, { limit: 1 });
+    if (response.features && response.features.length > 0) {
+      geometry = response.features[0].geometry;
+    }
+  } catch (geoErr) {
+    console.log("Geocoding failed:", geoErr.message);
+    // Continue without geometry — map won't show but listing still saves
+  }
+
   let url = req.file.path;
   let filename = req.file.filename;
   console.log(`${url} ... ${filename}`);
+
   const newListing = new Listing(req.body.listing);
   newListing.owner = req.user._id;
   newListing.image = { url, filename };
-
-  newListing.geometry = response.features[0].geometry;
+  if (geometry) newListing.geometry = geometry;
 
   let savedlisting = await newListing.save();
-  console.log(savedlisting)
-  //listing has been added
+  console.log(savedlisting);
+
   req.flash("success", "New Listing is Added");
   res.redirect("/listing");
-  //------------------
-  // 1. Extract the listing object from req.body
-  // let { listing } = req.body;
-
-  // // 2. Create the listing with the nested image structure already handled
-  // const newListing = new Listing({
-  //     ...listing, // This spreads title, description, price, etc.
-  //     image: {
-  //         url: listing.image, // Takes the string from the form
-  //         filename: "listingimage"
-  //     }
-  // });
-
-  //------------
-  // try {
-  //     const newListing = new Listing(req.body.listing)
-
-  //     await newListing.save();
-  //     res.redirect("/listing");
-  // } catch (err) {
-  //     next(err);
-  // }
 }
 
 module.exports.renderShowListing = async (req, res) => {
