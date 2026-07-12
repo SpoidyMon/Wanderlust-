@@ -22,7 +22,7 @@ module.exports.ListingSchema = joi.object({
             "Arctic", 
             "Domes", 
             "Boats"
-        ),
+        ).allow("", null).optional(),
     }).required(),
 });
 
