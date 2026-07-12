@@ -42,10 +42,29 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="location" class="form-label">Location</label>
-                    <input type="text" name="listing[location]" class="form-control" placeholder="Jaipur,Rajasthan" required>
-                    <div class="invalid-feedback">Location should be valid</div>
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" name="listing[location]" class="form-control" placeholder="Jaipur,Rajasthan" required>
+                        <div class="invalid-feedback">Location should be valid</div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label for="category" class="form-label">Category</label>
+                        <select name="listing[category]" class="form-select" id="category">
+                            <option value="" disabled selected>-- Select a Category --</option>
+                            <option value="Trending">Trending</option>
+                            <option value="Rooms">Rooms</option>
+                            <option value="Iconic Cities">Iconic Cities</option>
+                            <option value="Mountains">Mountains</option>
+                            <option value="Castles">Castles</option>
+                            <option value="Amazing Pools">Amazing Pools</option>
+                            <option value="Camping">Camping</option>
+                            <option value="Farms">Farms</option>
+                            <option value="Arctic">Arctic</option>
+                            <option value="Domes">Domes</option>
+                            <option value="Boats">Boats</option>
+                        </select>
+                    </div>
                 </div>
                 
                 <button class="btn btn-dark add-btn mt-3">Add</button>

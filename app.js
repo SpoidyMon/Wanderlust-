@@ -96,8 +96,7 @@ const secretSession = {
     resave: false,
     saveUninitialized: true,
     cookie: {
-        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
         httpOnly: true,
     }
 }
@@ -126,6 +125,9 @@ passport.deserializeUser(User.deserializeUser());
 
 //global middleware
 app.use((req, res, next) => {
+    // Prevent browser from caching pages so navbar always reflects auth state
+    res.setHeader("Cache-Control", "no-store");
+
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;

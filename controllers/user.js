@@ -5,7 +5,7 @@ module.exports.signupLoader= (req, res) => {
   res.render("users/signup.ejs");
 }
 
-module.exports.signup=async (req, res) => {
+module.exports.signup=async (req, res, next) => {
     try {
       let { username, email, password } = req.body;
       const newUser = new User({ email, username });
@@ -16,7 +16,7 @@ module.exports.signup=async (req, res) => {
       // We can invoke login to automatically login a user.
       req.login(registeredUser, (err) => {
         if (err) {
-          next(err);
+          return next(err);
         }
         req.flash("success", "Welcome to Wonderlust");
         res.redirect("/listing");
@@ -37,7 +37,7 @@ module.exports.login=async (req, res) => {
     res.redirect(redirectUrl);
 }
 
-module.exports.logout= (req, res) => {
+module.exports.logout= (req, res, next) => {
   req.logOut((err) => {
     if (err) {
       //passes error hanlding to global error middleware
