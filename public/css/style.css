@@ -10,7 +10,8 @@ body {
 }
 
 .navbar {
-    height: 5rem;
+    height: auto;
+    min-height: 5rem;
     background-color: rgb(255, 255, 255);
 }
 
@@ -51,6 +52,19 @@ body {
     color: #fe424d;
 }
 
+/* ── Search bar ─────────────────────────────────────── */
+.search-bar {
+    flex: 1;
+    max-width: 500px;
+    margin: 0 1rem;
+}
+
+.search-bar .d-flex {
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+/* ── Footer ─────────────────────────────────────────── */
 .f-info-links a {
     text-decoration: none;
     color: #222222;
@@ -81,17 +95,18 @@ body {
 
 .f-info {
     text-align: center;
-    height: 8rem;
+    height: auto;
+    min-height: 8rem;
+    padding: 1rem 0;
     background-color: #ebebeb;
     display: flex;
     flex-wrap: wrap;
-    ;
     justify-content: center;
-    align-items: space-evenly;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-/* cards */
-
+/* ── Cards ──────────────────────────────────────────── */
 .listing-card {
     border: none !important;
     margin-bottom: 2rem;
@@ -115,7 +130,6 @@ body {
     text-decoration: none;
 }
 
-
 .card-img-overlay {
     opacity: 0;
 }
@@ -125,25 +139,26 @@ body {
     background-color: white;
 }
 
-/* New listing */
+/* ── New / Edit listing ──────────────────────────────── */
 .add-btn {
     background-color: #fe424d !important;
     border: none !important;
 }
 
-/* edit img */
 .edit-btn {
     background-color: #fe424d !important;
     border: none !important;
 }
 
-/* show route */
+/* ── Show route ─────────────────────────────────────── */
 .show-img {
     height: 30vh;
 }
 
 .btns {
     display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .show-card {
@@ -157,12 +172,13 @@ body {
     border-radius: 10px;
 }
 
-/* navbar */
+/* ── Navbar search ──────────────────────────────────── */
 .search-btn {
     background-color: #fe424f;
     color: white;
     border-radius: 25px;
     padding: 0 1rem 0 1rem;
+    white-space: nowrap;
 }
 
 .search-btn:hover {
@@ -177,16 +193,24 @@ body {
 
 .search-inp {
     border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
+    padding: 0.5rem 1.5rem;
     font-size: 1rem;
+    min-width: 0;
 }
 
-/* index page   */
+/* ── Index filters ──────────────────────────────────── */
 #filters {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+}
 
+#filters::-webkit-scrollbar {
+    display: none;
 }
 
 #filters a {
@@ -198,6 +222,7 @@ body {
     text-align: center;
     margin-right: 2rem;
     opacity: 0.7;
+    flex-shrink: 0;
 }
 
 .filter:hover {
@@ -207,6 +232,7 @@ body {
 
 .filter p {
     font-size: 0.8rem;
+    margin-bottom: 0;
 }
 
 .tax-toggle {
@@ -216,6 +242,227 @@ body {
     border-radius: 1rem;
     height: 3.25rem;
     padding: 1rem;
-    margin-left: 3rem;
+    margin-left: 1rem;
     margin-bottom: 16px;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
+
+/* ── Edit page original image ────────────────────────── */
+.edit-img-preview {
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════════════════ */
+
+/* ── Tablet (≤ 992px) ───────────────────────────────── */
+@media (max-width: 992px) {
+    .show-img {
+        height: 35vh;
+    }
+
+    #map {
+        height: 300px;
+    }
+
+    /* Show page: widen the card from col-6 to full width */
+    .show-card.col-6 {
+        width: 100%;
+        max-width: 100%;
+        margin-left: 0 !important;
+    }
+}
+
+/* ── Tablet (≤ 768px) ───────────────────────────────── */
+@media (max-width: 768px) {
+    /* Navbar: search bar goes below brand row when collapsed */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+
+    .search-bar {
+        max-width: 100%;
+        width: 100%;
+        margin: 0.5rem 0;
+        order: 3;
+    }
+
+    .navbar-collapse .navbar-nav:first-child {
+        margin-bottom: 0.25rem;
+    }
+
+    /* Search input shrinks nicely */
+    .search-inp {
+        padding: 0.4rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .search-btn {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* Show page columns */
+    .show-card {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    /* Offset columns → full width on mobile */
+    .col-8.offset-3,
+    .col-6.offset-3,
+    .col.offset-2 {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    .btns.offset-3 {
+        margin-left: 0 !important;
+    }
+
+    /* Reviews cards */
+    .card.col-5 {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: 0 !important;
+    }
+
+    /* Map */
+    #map {
+        height: 250px;
+    }
+
+    /* Show image taller on mobile so it's visible */
+    .show-img {
+        height: 40vw;
+        min-height: 180px;
+    }
+
+    /* Listings grid: 2 columns on tablet */
+    .row.row-cols-lg-3 {
+        --bs-gutter-x: 1rem;
+    }
+
+    /* Footer */
+    .f-info {
+        flex-direction: column;
+        gap: 0.4rem;
+        padding: 1rem;
+    }
+
+    .f-info-socials {
+        margin-left: 0;
+    }
+
+    /* tax toggle on filters */
+    .tax-toggle {
+        margin-left: 0.5rem;
+    }
+}
+
+/* ── Mobile (≤ 576px) ───────────────────────────────── */
+@media (max-width: 576px) {
+    /* Navbar */
+    .navbar {
+        padding: 0.4rem 0.75rem;
+    }
+
+    .wonderlust {
+        font-size: large !important;
+        margin-right: 8px;
+    }
+
+    .nav-create {
+        margin: 0 4px;
+        font-size: 0.85rem;
+    }
+
+    /* Search bar full width */
+    .search-bar {
+        padding: 0.25rem 0;
+    }
+
+    .search-inp {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.85rem;
+    }
+
+    .search-btn {
+        font-size: 0.8rem;
+        padding: 0.35rem 0.6rem;
+    }
+
+    .search-btn i {
+        margin-right: 0.25rem;
+    }
+
+    /* Listings grid: single column */
+    .row-cols-sm-1 > * {
+        width: 100% !important;
+    }
+
+    /* Card image height */
+    .card-img-top {
+        height: 55vw !important;
+        object-fit: cover !important;
+    }
+
+    /* Filters: horizontal scroll (already set above) */
+    .filter {
+        margin-right: 1.25rem;
+    }
+
+    /* Show page image */
+    .show-img {
+        height: 50vw;
+        min-height: 160px;
+    }
+
+    /* Form pages (new/edit/login/signup) */
+    .col.offset-2,
+    .col-6.offset-3 {
+        padding: 0 0.5rem;
+    }
+
+    /* Map smaller on phone */
+    #map {
+        height: 220px;
+    }
+
+    /* Footer compact */
+    .f-info {
+        height: auto;
+        padding: 0.75rem;
+    }
+
+    .f-info-socials i {
+        font-size: 1rem;
+        margin-right: 1.2rem;
+    }
+
+    /* Buttons in show page */
+    .btns {
+        flex-direction: row;
+        gap: 0.5rem;
+    }
+
+    /* Review cards full width */
+    .card.col-5.mb-3.ms-3 {
+        width: calc(100% - 1rem) !important;
+        margin-left: 0.5rem !important;
+    }
+
+    /* tax toggle wrap below filters */
+    .tax-toggle {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        height: auto;
+        padding: 0.5rem 0.75rem;
+    }
+}

@@ -1,7 +1,7 @@
 <% layout('/layouts/boilerplate.ejs') -%>
 
     <div class="row">
-        <div class="col offset-2 mt-3">
+        <div class="col-12 col-md-10 offset-md-1 col-lg-8 offset-lg-2 mt-3">
             <h3>Edit your Listing</h3>
             <form novalidate class="needs-validation" method="post" action="/listing/<%= listing.id %>?_method=PUT"
                 enctype="multipart/form-data">
@@ -25,7 +25,7 @@
 
                 <div class="mb-3">
                     <h5>Orignal Image Url</h5>
-                    <img src="<%= orignalImageUrl %>" alt="">
+                    <img src="<%= orignalImageUrl %>" class="edit-img-preview" alt="">
 
                 </div>
 
